@@ -68,7 +68,7 @@ if you like to have a default `/doc` documentation, setup the config json to get
 
 `sails-hook-swagger-ui` has a simple config file that outputted for you.
 
-so you can deciede
+so you can decided to enable this plugin or not, or change the default entry `/doc` to load the swagger documentation you want.
 
 ```javascript
 module.exports['swagger-ui'] = {
