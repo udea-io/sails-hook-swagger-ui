@@ -20,15 +20,16 @@
     "url": "https://github.com/iamcxa/sails-hook-swagger-ui"
   },
   "devDependencies": {
-    "sails": "~1.0.2",
     "@sailshq/eslint": "^4.19.3",
+    "chai-datetime": "^1.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "chai-datetime": "^1.5.0",
+    "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
-    "istanbul": "^1.1.0-alpha.1"
+    "sails": "~1.0.2"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "sails-util-micro-apps": "git+https://github.com/MoreAppio/sails-util-micro-apps.git"
   },
   "sails": {
