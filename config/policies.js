@@ -1,4 +1,5 @@
 
 module.exports.policies = {
-  'SwaggerController': [],
+  'swagger/*': true,
+  // 'swagger': true,
 };

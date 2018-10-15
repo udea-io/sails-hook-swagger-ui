@@ -1,42 +1,47 @@
 var path = require('path');
-var config = require('./config/swagger-ui');
 
 module.exports = function (sails) {
-    const loader = require('sails-util-micro-apps')(sails);
-    const config = sails.config['swagger-ui'] || config;
-    const isEnable = config.enable;
-    return {
-      configure() {
+  var hookName = 'swagger-ui';
+  var loader = require('sails-util-micro-apps')(sails);
+  var hookConfig = require(`./config/${hookName}`);
+  var config = sails.config[hookName] || hookConfig[hookName];
+  var isEnable = config.enable;
+  return {
+    configure() {
+      if (isEnable) {
+        loader.configure({
+          policies: `${__dirname}/api/policies`,
+          config: `${__dirname}/config`,
+          assets: `${__dirname}/assets`,
+          views: `${__dirname}/views`,
+        });
+      }
+    },
+    initialize(next) {
+      sails.log.debug(`[!][sails-hook-${hookName}] Enable Status: ${isEnable}`);
+      if (isEnable) {
+        loader.inject({
+          models: `${__dirname}/api/models`,
+          helpers: `${__dirname}/api/helpers`,
+          services: `${__dirname}/api/services`,
+          responses: `${__dirname}/api/responses`,
+          controllers: `${__dirname}/api/controllers`,
+        }, err => next(err));
+      } else next();
+    },
+    customMiddleware(express, app, multipleViews, sails) {
+      try {
         if (isEnable) {
-          loader.configure({
-            policies: `${__dirname}/api/policies`, // Path to your hook's policies
-            config: `${__dirname}/config`, // Path to your hook's config
-            assets: `${__dirname}/assets`,
-            views: `${__dirname}/views`,
-          });
+          var maxAge = sails.config.http.cache;
+          app.use('/assets', express.static(`${__dirname}/assets`, {
+            maxAge
+          }));
+          multipleViews(app, path.join(__dirname, 'views'));
         }
-      },
-      initialize(next) {
-        if (isEnable) {
-          loader.inject({
-            responses: `${__dirname}/api/responses`,
-            models: `${__dirname}/api/models`, // Path to your hook's models
-            services: `${__dirname}/api/services`, // Path to your hook's services
-            controllers: `${__dirname}/api/controllers`, // Path to your hook's controllers
-          }, err => next(err));
-        }
-      },
-      customMiddleware(express, app, multipleViews, sails) {
-        try {
-          if (isEnable) {
-            const maxAge = sails.config.http.cache;
-            app.use('/assets', express.static(`${__dirname}/assets`, { maxAge }));
-            multipleViews(app, path.join(__dirname, 'views'));
-          }
-        } catch (e) {
-          sails.log.error('run hook customMiddleware error', e);
-          throw e;
-        }
-      },
-    };
+      } catch (e) {
+        sails.log.error('run hook customMiddleware error', e);
+        throw e;
+      }
+    },
+  };
 };
