@@ -7,6 +7,7 @@ module.exports = function (sails) {
   var config = sails.config[hookName] || hookConfig[hookName];
   var isEnable = config.enable;
   return {
+    config,
     configure() {
       if (isEnable) {
         loader.configure({

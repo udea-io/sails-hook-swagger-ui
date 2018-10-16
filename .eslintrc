@@ -13,10 +13,7 @@
   },
 
   "parserOptions": {
-    "ecmaVersion": 8,
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    }
+    "ecmaVersion": 8
   },
 
   "globals": {

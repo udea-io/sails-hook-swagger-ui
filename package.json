@@ -23,6 +23,11 @@
     "type": "git",
     "url": "https://github.com/iamcxa/sails-hook-swagger-ui"
   },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --max-warnings=0 --report-unused-disable-directives './' && echo '✔  Your .js files look good.'",
+    "lint-fix": "./node_modules/.bin/eslint --max-warnings=0 --report-unused-disable-directives --fix './' && echo '✔  Your .js files look good.'",
+    "prepublishOnly": ""
+  },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
     "chai-datetime": "^1.5.0",

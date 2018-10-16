@@ -1,4 +1,10 @@
 assets/dependencies/**/*.js
 views/**/*.ejs
-node_modules/**/*.js
-node_modules/*.js
+tasks
+node_modules
+Gruntfile.js
+package.json
+coverage
+config/local.js
+config/local.default.js
+config/local.current.js
