@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-swagger-ui",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "A Swagger UI Hook for sails-project-admin",
   "main": "index.js",
   "author": {

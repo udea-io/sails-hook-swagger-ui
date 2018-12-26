@@ -8,7 +8,7 @@ export async function ShowDoc(req, res) {
       swaggerObj = sails.hooks[project].swagger;
     } else {
       const defaultProject = sails.config['swagger-ui'].default;
-      if (defaultProject) {
+      if (defaultProject && sails.hooks[defaultProject]) {
         swaggerObj = sails.hooks[defaultProject].swagger;
       }
     }

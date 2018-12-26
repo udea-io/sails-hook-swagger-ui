@@ -6,7 +6,7 @@ const chai = require('chai');
 const env = require('../config/env/test');
 chai.use(require('chai-datetime'));
 
-global.request = require('supertest-as-promised');
+global.request = require('supertest');
 
 global.should = chai.should();
 global.sinon = require('sinon');

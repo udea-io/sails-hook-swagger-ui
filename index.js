@@ -1,12 +1,16 @@
 var path = require('path');
 
 module.exports = function (sails) {
-  var hookName = 'swagger-ui';
   var loader = require('sails-util-micro-apps')(sails);
-  var hookConfig = require(`./config/${hookName}`);
-  var config = sails.config[hookName] || hookConfig[hookName];
-  var isEnable = config.enable;
   return {
+    defaults: {
+      __configKey__: {
+        enable: true,
+        exposeToGlobal: true,
+        _hookTimeout: 10 * 1000,
+        default: null,
+      },
+    },
     config,
     configure() {
       if (isEnable) {
@@ -19,7 +23,6 @@ module.exports = function (sails) {
       }
     },
     initialize(next) {
-      sails.log.debug(`[!][sails-hook-${hookName}] Enable Status: ${isEnable}`);
       if (isEnable) {
         loader.inject({
           models: `${__dirname}/api/models`,
