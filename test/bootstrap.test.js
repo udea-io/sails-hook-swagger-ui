@@ -58,7 +58,7 @@ before((done) => {
       env,
       {
         environment: 'test',
-        autoreload: false,
+        autoreload: { active: false },
       },
     );
     // eslint-disable-next-line no-param-reassign

@@ -13,35 +13,29 @@ module.exports = function (sails) {
     },
     config,
     configure() {
-      if (isEnable) {
-        loader.configure({
-          policies: `${__dirname}/api/policies`,
-          config: `${__dirname}/config`,
-          assets: `${__dirname}/assets`,
-          views: `${__dirname}/views`,
-        });
-      }
+      loader.configure({
+        policies: `${__dirname}/api/policies`,
+        config: `${__dirname}/config`,
+        assets: `${__dirname}/assets`,
+        views: `${__dirname}/views`,
+      });
     },
     initialize(next) {
-      if (isEnable) {
-        loader.inject({
-          models: `${__dirname}/api/models`,
-          helpers: `${__dirname}/api/helpers`,
-          services: `${__dirname}/api/services`,
-          responses: `${__dirname}/api/responses`,
-          controllers: `${__dirname}/api/controllers`,
-        }, err => next(err));
-      } else next();
+      loader.inject({
+        models: `${__dirname}/api/models`,
+        helpers: `${__dirname}/api/helpers`,
+        services: `${__dirname}/api/services`,
+        responses: `${__dirname}/api/responses`,
+        controllers: `${__dirname}/api/controllers`,
+      }, err => next(err));
     },
     customMiddleware(express, app, multipleViews, sails) {
       try {
-        if (isEnable) {
-          var maxAge = sails.config.http.cache;
-          app.use('/assets', express.static(`${__dirname}/assets`, {
-            maxAge
-          }));
-          multipleViews(app, path.join(__dirname, 'views'));
-        }
+        var maxAge = sails.config.http.cache;
+        app.use('/assets', express.static(`${__dirname}/assets`, {
+          maxAge
+        }));
+        multipleViews(app, path.join(__dirname, 'views'));
       } catch (e) {
         sails.log.error('run hook customMiddleware error', e);
         throw e;
