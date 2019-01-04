@@ -11,7 +11,6 @@ module.exports = function (sails) {
         default: null,
       },
     },
-    config,
     configure() {
       loader.configure({
         policies: `${__dirname}/api/policies`,
