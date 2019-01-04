@@ -1,5 +1,3 @@
-var path = require('path');
-
 module.exports = function (sails) {
   var loader = require('sails-util-micro-apps')(sails);
   return {
@@ -7,7 +5,7 @@ module.exports = function (sails) {
       __configKey__: {
         enable: true,
         exposeToGlobal: true,
-        _hookTimeout: 10 * 1000,
+        _hookTimeout: 30 * 1000,
         default: null,
       },
     },
@@ -30,6 +28,7 @@ module.exports = function (sails) {
     },
     customMiddleware(express, app, multipleViews, sails) {
       try {
+        var path = require('path');
         var maxAge = sails.config.http.cache;
         app.use('/assets', express.static(`${__dirname}/assets`, {
           maxAge
