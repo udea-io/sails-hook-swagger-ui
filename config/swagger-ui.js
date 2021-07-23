@@ -1,5 +1,5 @@
 module.exports['swagger-ui'] = {
-  // enable: true,
-  // give a default sails project name(which is the folder name of target hook)
-  // default: null,
+  enable: true,
+  path: 'swagger/swagger.json',
+  version: '3.51.1',
 };
