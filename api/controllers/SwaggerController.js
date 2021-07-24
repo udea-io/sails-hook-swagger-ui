@@ -1,5 +1,8 @@
+
 const ejs = require('ejs');
 export async function ShowDoc(req, res) {
+
+module.exports = async function ShowDoc(req, res) {
   const {
     project,
   } = req.allParams();
