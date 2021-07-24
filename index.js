@@ -1,5 +1,12 @@
 module.exports = function (sails) {
   var loader = require('sails-util-micro-apps')(sails);
+  loader.configure({
+    policies: `${__dirname}/api/policies`,
+    config: `${__dirname}/config`,
+    assets: `${__dirname}/assets`,
+    views: `${__dirname}/views`,
+  });
+
   return {
     defaults: {
       __configKey__: {
@@ -10,12 +17,6 @@ module.exports = function (sails) {
       },
     },
     configure() {
-      loader.configure({
-        policies: `${__dirname}/api/policies`,
-        config: `${__dirname}/config`,
-        assets: `${__dirname}/assets`,
-        views: `${__dirname}/views`,
-      });
     },
     initialize(next) {
       loader.inject({
@@ -29,10 +30,6 @@ module.exports = function (sails) {
     customMiddleware(express, app, multipleViews, sails) {
       try {
         var path = require('path');
-        var maxAge = sails.config.http.cache;
-        app.use('/assets', express.static(`${__dirname}/assets`, {
-          maxAge
-        }));
         multipleViews(app, path.join(__dirname, 'views'));
       } catch (e) {
         sails.log.error('run hook customMiddleware error', e);

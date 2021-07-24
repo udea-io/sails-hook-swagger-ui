@@ -1,22 +1,31 @@
+
+const ejs = require('ejs');
+export async function ShowDoc(req, res) {
+
 module.exports = async function ShowDoc(req, res) {
   const {
     project,
   } = req.allParams();
   try {
-    let swaggerObj = null
+    let swaggerObj = null;
     if (project && sails.hooks[project]) {
-      swaggerObj = sails.hooks[project].swagger;
+      swaggerObj = require(`${sails.config.appPath}/api/hooks/${project}/${sails.config['swagger-ui'].path}`);
     } else {
-      const defaultProject = sails.config['swagger-ui'].default;
-      if (defaultProject && sails.hooks[defaultProject]) {
-        swaggerObj = sails.hooks[defaultProject].swagger;
-      }
+      swaggerObj = require(`${sails.config.appPath}/${sails.config['swagger-ui'].path}`);
     }
-    return res.view('swagger-ui/index', {
-      data: swaggerObj,
-      message: 'success',
-      layout: false,
-    }); 
+
+    ejs.renderFile(
+      `${__dirname}/../../views/swagger-ui/index.ejs`,
+      {
+        data: swaggerObj,
+        version: sails.config['swagger-ui'].version,
+      },
+      {},
+      function (err, data) {
+        if (err) throw err;
+        return res.send(data);
+      },
+    );
   } catch (e) {
     return res.error(e);
   }

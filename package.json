@@ -36,11 +36,11 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
     "chai": "^4.2.0",
-    "sails": "~1.0.2"
+    "sails": "^1.4.3"
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "sails-util-micro-apps": "git+https://github.com/MoreAppio/sails-util-micro-apps.git"
+    "sails-util-micro-apps": "git+https://github.com/udea-io/sails-util-micro-apps.git"
   },
   "sails": {
     "isHook": true
